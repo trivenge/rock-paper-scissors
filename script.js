@@ -1,21 +1,17 @@
 // array of the game choices
 const choices = ['Rock', 'Paper', 'Scissors'];
+
 // Randomly selects (Math.random) from the array of choices (length) from the list of choices and
 // generates a random choice for the computer selection
 function getComputerChoice() {
   let randomChoice = choices[Math.floor(Math.random() * choices.length)];
   return randomChoice;
 }
-const computerSelection = getComputerChoice();
+
 // prompt user input from player and check if input is null or a string and force user to input again
 function playerSelection() {
   let playerInput = prompt('Enter your choice of:\nRock, Paper, or Scissors?');
-  if (playerInput === null) {
-    alert(
-      'If you would like to play again, please refresh the window. Thank you!'
-    );
-    return;
-  }
+
   if (playerInput === '') {
     alert(
       "Please type 'Rock, Paper, or Scissors' or press cancel if you do not wish to play"
@@ -36,10 +32,7 @@ function playerSelection() {
   }
 }
 
-const playerChoice = playerSelection();
-//function winner determines if player or computer wins and returns the winner
-
-function winner() {
+function winner(playerChoice, computerSelection) {
   if (playerChoice == 'Rock' && computerSelection == 'Scissors') {
     return 'Rock beats Scissors, Player wins!';
   }
@@ -55,18 +48,30 @@ function winner() {
   if (computerSelection == 'Scissors' && playerChoice == 'Paper') {
     return 'Scissors beats Paper, Computer wins!';
   }
+  if (computerSelection == 'Paper' && playerChoice == 'Rock') {
+    return 'Paper beats Rock, Computer wins!';
+  }
 }
 
 //function draw determines if playerchoice is equal to computer, if so, player does not beat computer, so draw!
-function draw() {
+function draw(playerChoice, computerSelection) {
   if (playerChoice == computerSelection) {
     return `Player's choice of ${playerChoice} does not beat the Computer's choice of ${computerSelection}: Draw!`;
   }
 }
 
 function game() {
-  const resultOfDraw = draw();
-  const resultOfWinner = winner();
+  const computerSelection = getComputerChoice();
+  const playerChoice = playerSelection();
+  const resultOfDraw = draw(playerChoice, computerSelection);
+  const resultOfWinner = winner(playerChoice, computerSelection);
+
+  if (playerChoice === null) {
+    console.log('Player input is null. Game terminated.');
+    alert('Game terminated. Please restart the game to play again.');
+    throw new Error('Game terminated');
+  }
+
   console.log(playerChoice);
   console.log(computerSelection);
 
@@ -81,4 +86,10 @@ function game() {
   }
 }
 
-game();
+try {
+  for (let i = 0; i < 5; i++) {
+    const result = game();
+  }
+} catch (error) {
+  console.log(error);
+}
