@@ -1,0 +1,22 @@
+body {
+  display: flex;
+  margin: 0;
+}
+
+#container-player {
+  display: flex;
+}
+#container-computer {
+  display: flex;
+}
+.result {
+}
+
+.rock,
+.paper,
+.scissors {
+  min-width: 80px;
+  max-width: 200px;
+  height: auto;
+  width: 100px;
+}
